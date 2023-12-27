@@ -1,5 +1,4 @@
-const input = `Time:        60     80     86     76
-Distance:   601   1163   1559   1300`
+const input = ``
 
 //the amount of time the race runs
 const time = []

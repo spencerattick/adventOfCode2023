@@ -6,6 +6,8 @@ QQQJA 483`
 
 const splitInput = input.split('\n')
 
+const cardStregth = 'AKQJT98765432'
+
 const fiveOfAKind = []
 const fourOfAKind = []
 const fullHouse = []
@@ -83,11 +85,41 @@ const findHighCard = hand => {
     highCard.push(hand)
 }
 
+const sortArray = arr => {
+    // [ 'KK677 28', 'KTJJT 220' ]
+    let positionCounter = 0
+    let individualCardCounter = 0
+    let cardStregthCounter = 0
+
+    while (positionCounter < arr.length) {
+        //are the first chars the same?
+            //loop through chars until one is different
+                //reorder records based on that different char
+        if (arr[positionCounter][individualCardCounter] === arr[positionCounter + 1][individualCardCounter]) {
+            individualCardCounter++
+        } else {
+            const firstHandDifferentCardValue = arr[positionCounter][individualCardCounter]
+            const secondHandDifferentCardValue = arr[positionCounter + 1][individualCardCounter]
+
+            //indexOf both - lowest num is the strongest
+        }
+    }
+
+}
+
 const loopThroughHands = hands => {
     // console.log(input)
     for (let hand of hands) {
         findFiveOfAKind(hand)
     }
+    console.log('TWO PAIR ', twoPair)
+    const sortedFiveOfAKind = sortArray(fiveOfAKind)
+    const sortedFourOfAKind = sortArray(fourOfAKind)
+    const sortedFullHouse = sortArray(fullHouse)
+    const sortedThreeOfAKind = sortArray(threeOfAKind)
+    const sortedTwoPair = sortArray(twoPair)
+    const sortedOnePair = sortArray(onePair)
+    const sortedHighCard = sortArray(highCard)
 }
 
 console.log(loopThroughHands(splitInput))
