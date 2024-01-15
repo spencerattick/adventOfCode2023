@@ -11,138 +11,72 @@ const input = `467..114..
 
 const splitInput = input.split('\n')
 
-let partSum = 0
+//loop through input until a number is encountered
+//need to capture the total digits
+//need start index of the num and end index of the num
+    //run a function to see if there are any special chars ABOVE (including diagonal positions)
+        //if yes
+            //add num total to the grand total and continue
+        //if no
+            //run another function see check for special charaters BELOW (includind diagonal positions)
+        //if yes
+           //add num total to the grand total and continue
+        //if no
+            //run anohter function to check for special characters LEFT and RIGHT
+                //if yes
+                    //add num total to the grand total and continue
+                //if no
+                    //continue iterating
 
-const loopInput = splitInput => {
+const checkAboveSpecialChars = (start, end, rowNum) => {
+    if (rowNum === 0) {
+        return false 
+    } 
+
+    if (start > 0) {
+        start--
+    }
+
+    if (end < splitInput[0].length) {
+        end++
+    }
+    
+    for (let i = start; start <= end; i++) {
+        const currentChar = splitInput[rowNum - 1][i]
+        if (!Number(currentChar) && currentChar !== '.') {
+            return true
+        }
+    }
+
+    return false
+}
+
+
+const loopThroughDataSet = splitInput => {
+    let currentNum = ''
+    let currentNumStart, currentNumEnd
+    let totalPartNums = 0
+
     for (let i = 0; i < splitInput.length; i++) {
-        getNumAndCoordinates(splitInput[i].split('.'), i)
-    }
-    console.log('SOMETHING')
-    return partSum
-}
-
-const getNumAndCoordinates = (row, rowNum) => {
-    let num, startCoordinate, endCordinate, numOfCharsInNum
-
-    for (let i = 0; i < row.length; i++) {
-        if (Number(row[i]) || row[i].length > 1) {
-            if (!Number(row[i])) {
-                num = ''
-                for (let char of row[i].split('')) {
-                    if (Number(char)) {
-                        num+=char
-                    }
+        for (let j = 0; j < splitInput[i].length; j++) {
+            if (Number(splitInput[i][j])) {
+                if (typeof currentNumStart !== 'number') {
+                    currentNumStart = j
                 }
-                num = Number(num)
-            } else {
-                num = Number(row[i])
+                currentNum+=splitInput[i][j]
+            } else if (currentNum.length > 0) {
+                currentNumEnd = j - 1
+                // console.log(currentNum, currentNumStart, currentNumEnd)
+                //check for special chars here
+                if (checkAboveSpecialChars(currentNumStart, currentNumEnd, i)) {
+                    totalPartNums += Number(currentNum)
+                } 
+                currentNumStart = null
+                currentNumEnd = null
+                currentNum = ''
             }
-            startCoordinate = row.join('.').indexOf(num.toString())
-            numOfCharsInNum = num.toString().length - 1
-            endCordinate = startCoordinate + numOfCharsInNum
-
-            if (isSymbolLeftOfNum(startCoordinate,rowNum)) {
-                partSum+=num
-            } else if (isSymbolRightOfNum(endCordinate, rowNum)) {
-                partSum+=num
-            } else if (isSymbolAboveNum(startCoordinate, endCordinate, rowNum)) {
-                partSum+=num
-            } else if (isSymbolBelowNum(startCoordinate, endCordinate, rowNum)) {
-                partSum+=num
-            }
-            // console.log('NUM ', num)
-            // console.log('START ', startCoordinate)
-            // console.log('LENGTH ', numOfCharsInNum)
-            // console.log('END ', endCordinate)
         }
     }
-
 }
 
-const isSymbolLeftOfNum = (startCoordinate, rowNum) => {
-    if (!splitInput[rowNum][startCoordinate - 1]) {
-        return false
-    }
-
-    if (!Number(splitInput[rowNum][startCoordinate - 1]) && splitInput[rowNum][startCoordinate - 1] !== '.') {
-        return true
-    } else {
-        return false
-    }
-}
-
-const isSymbolRightOfNum = (endCordinate, rowNum) => {
-    if (!splitInput[rowNum][endCordinate + 1]) {
-        return false
-    }
-
-    if (!Number(splitInput[rowNum][endCordinate + 1]) && splitInput[rowNum][endCordinate + 1] !== '.') {
-        return true
-    } else {
-        return false
-    }
-}
-
-
-const isSymbolAboveNum = (startCoordinate, endCordinate, rowNum) => {
-    if (rowNum - 1 < 0) {
-        return false
-    }
-
-    let loopStart
-
-    if (startCoordinate - 1 >= 0) {
-        loopStart = startCoordinate - 1
-    } else {
-        loopStart = 0
-    }
-
-    let loopEnd
-
-    if (endCordinate + 1 <= splitInput[0].length - 1) {
-        loopEnd = endCordinate + 1
-    } else {
-        loopEnd = splitInput[0].length - 1
-    }
-
-    for (let i = loopStart; i <= loopEnd; i++) {
-        if (!Number(splitInput[rowNum - 1][i]) && splitInput[rowNum - 1][i] !== '.') {
-            return true
-        }
-    }
-
-    return false
-
-}
-
-const isSymbolBelowNum = (startCoordinate, endCordinate, rowNum) => {
-    if (rowNum + 1 > splitInput.length) {
-        return false
-    }
-
-    let loopStart
-
-    if (startCoordinate - 1 >= 0) {
-        loopStart = startCoordinate - 1
-    } else {
-        loopStart = 0
-    }
-
-    let loopEnd
-
-    if (endCordinate + 1 <= splitInput[0].length - 1) {
-        loopEnd = endCordinate + 1
-    } else {
-        loopEnd = splitInput[0].length - 1
-    }
-
-    for (let i = loopStart; i <= loopEnd; i++) {
-        if (!Number(splitInput[rowNum + 1][i]) && splitInput[rowNum + 1][i] !== '.') {
-            return true
-        }
-    }
-    return false
-
-}
-
-console.log(loopInput(splitInput))
+console.log(loopThroughDataSet(splitInput))

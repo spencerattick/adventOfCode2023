@@ -85,7 +85,7 @@ const checkFullSeedNeedsInCurrentRange = () => {
         currentSeedMap = []
         currentSeedMapForThisSeed = []
     }
-
+    currentRange = []
 }
 
 const parseSeedLine = seedsLine => {
