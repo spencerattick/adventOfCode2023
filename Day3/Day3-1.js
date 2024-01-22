@@ -1,4 +1,13 @@
-const input = ``
+const input = `467..114..
+...*......
+..35..633.
+......#...
+617*......
+.....+.58.
+..592.....
+......755.
+...$.*....
+.664.598..`
 
 const splitInput = input.split('\n')
 
@@ -19,7 +28,7 @@ const checkAboveSpecialChars = (start, end, rowNum) => {
     for (let i = start; i <= end; i++) {
         const currentChar = splitInput[rowNum - 1][i]
         if (!Number(currentChar) && currentChar !== '.') {
-            console.log('ABOVE')
+            // console.log('ABOVE')
             return true
         }
     }
@@ -43,7 +52,7 @@ const checkBelowSpecialChars = (start, end, rowNum) => {
     for (let i = start; i <= end; i++) {
         const currentChar = splitInput[rowNum + 1][i] 
         if (!Number(currentChar) && currentChar !== '.') {
-            console.log('BELOW')
+            // console.log('BELOW')
             return true
         }
     }
@@ -59,7 +68,7 @@ const checkLeftSpecialChars = (start, rowNum) => {
     }
     
     if (!Number(splitInput[rowNum][start]) && splitInput[rowNum][start] !== '.') {
-        console.log('LEFT')
+        // console.log('LEFT')
         return true
     }
 
@@ -74,7 +83,7 @@ const checkRightSpecialChars = (end, rowNum) => {
     }
 
     if (!Number(splitInput[rowNum][end]) && splitInput[rowNum][end] !== '.') {
-        console.log('RIGHT')
+        // console.log('RIGHT')
         return true
     }
 
@@ -95,7 +104,7 @@ const loopThroughDataSet = splitInput => {
                 currentNum+=splitInput[i][j]
             } else if (currentNum.length > 0) {
                 currentNumEnd = j - 1
-                console.log(currentNum, currentNumStart, currentNumEnd)
+                // console.log(currentNum, currentNumStart, currentNumEnd)
                 if (checkAboveSpecialChars(currentNumStart, currentNumEnd, i)) {
                     totalPartNums += Number(currentNum)
                 } else if (checkBelowSpecialChars(currentNumStart, currentNumEnd, i)) {
@@ -105,7 +114,7 @@ const loopThroughDataSet = splitInput => {
                 } else if (checkRightSpecialChars(currentNumEnd, i)) {
                     totalPartNums += Number(currentNum)
                 } else {
-                    console.log('NOT A PART')
+                    // console.log('NOT A PART')
                 }
                 currentNumStart = null
                 currentNumEnd = null
@@ -116,7 +125,7 @@ const loopThroughDataSet = splitInput => {
     return totalPartNums
 }
 
-console.log(loopThroughDataSet(splitInput))
+// console.log(loopThroughDataSet(splitInput))
 
 module.exports = {
     loopThroughDataSet

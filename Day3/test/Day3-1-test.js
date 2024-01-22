@@ -7,7 +7,8 @@ const { loopThroughDataSet } = require('../Day3-1');
 describe('Day3-1', function () {
   describe('Sample Data Provided', function () {
     it('should return 4361', function () {
-      const dataToTest = `467..114..
+      const dataToTest = 
+`467..114..
 ...*......
 ..35..633.
 ......#...
@@ -16,12 +17,12 @@ describe('Day3-1', function () {
 ..592.....
 ......755.
 ...$.*....
-.664.598..`;
-
+.664.598..`
 
       const splitInput = dataToTest.split('\n')
-      console.log(splitInput)
-      assert.equal(loopThroughDataSet(splitInput), 4361)
+      const result = loopThroughDataSet(splitInput)
+      console.log(result)
+      assert.equal(result, 4361)
     })
   })
 })
